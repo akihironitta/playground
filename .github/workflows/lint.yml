@@ -1,4 +1,4 @@
-name: Pylint
+name: Check Code Format
 
 on: [push]
 
@@ -8,25 +8,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install flake8 black isort mypy
+        
     - name: isort
       run: |
         isort . --diff
+        
     - name: isort with --check
       run: isort . --check --diff
-    - name: flake8
-      run: |
-        flake8 .
-    - name: black
-      run: |
-        black . --check --diff
-    - name: mypy
-      run: mypy .

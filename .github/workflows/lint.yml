@@ -21,6 +21,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 black isort mypy
         
-    - name: isort
+    - name: isort --diff
       run: |
         isort . --diff
+
+    - name: isort --diff --check
+      run: |
+        isort . --diff --check

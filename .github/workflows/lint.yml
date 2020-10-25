@@ -24,6 +24,3 @@ jobs:
     - name: isort
       run: |
         isort . --diff
-        
-    - name: isort with --check
-      run: isort . --check --diff

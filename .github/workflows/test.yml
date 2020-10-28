@@ -25,7 +25,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.cache/datasets
-        key: ${{ runner.os }}-datasets-${{ hashFiles("tests/.download_datasets.py") }}
+        key: ${{ runner.os }}-datasets-${{ hashFiles("**/.download_datasets.py") }}
 
     - name: Download datasetes
       run: |

@@ -30,6 +30,7 @@ jobs:
           
     - name: Download datasetes
       run: |
+        pwd
         python ./tests/.download_datasets.py
         
     - name: pytest

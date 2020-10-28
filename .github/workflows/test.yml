@@ -26,8 +26,10 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.cache/datasets
-        key: ${{ runner.os }}-datasets-${{ hashFiles('tests/.download_datasets.py') }}
-
+        key: datasets-${{ hashFiles('tests/.download_datasets.py') }}
+        restore-keys: |
+          datasets-
+          
     - name: Download datasetes if not cached
       if: steps.cache-datasets.outputs.cache-hit != 'false'
       run: |

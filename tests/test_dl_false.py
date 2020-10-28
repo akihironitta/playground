@@ -3,4 +3,4 @@ from torchvision.datasets import MNIST
 
 
 def test_dl_false():
-    dataset = MNIST("./datasets/", download=False)
+    dataset = MNIST("./.cache/datasets/", download=False)

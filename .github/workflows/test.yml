@@ -25,10 +25,10 @@ jobs:
       id: cache-datasets
       uses: actions/cache@v2
       with:
-        path: ~/.cache/datasets
+        path: .cache/datasets
         key: datasets-${{ hashFiles('tests/.download_datasets.py') }}
           
-    - name: Download datasetes
+    - name: Download datasets
       run: |
         pwd
         python ./tests/.download_datasets.py

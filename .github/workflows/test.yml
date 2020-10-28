@@ -28,8 +28,7 @@ jobs:
         path: ~/.cache/datasets
         key: datasets-${{ hashFiles('tests/.download_datasets.py') }}
           
-    - name: Download datasetes if not cached
-      if: steps.cache-datasets.outputs.cache-hit != 'true'
+    - name: Download datasetes
       run: |
         python ./tests/.download_datasets.py
         

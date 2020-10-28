@@ -21,15 +21,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Cache datasets
+    - name: Check cached datasets
+      id: cache-datasets
       uses: actions/cache@v2
       with:
         path: ~/.cache/datasets
         key: ${{ runner.os }}-datasets-${{ hashFiles('tests/.download_datasets.py') }}
 
-    - name: Download datasetes
+    - name: Download datasetes if not cached
+      if: steps.cache-datasets.outputs.cache-hit != 'false'
       run: |
+        echo DATASET NOT FOUND. DOWNLOADING...
         python ./tests/.download_datasets.py
+        echo DATASET DOWNLOADED.
         
     - name: pytest
       run: |

@@ -1,0 +1,36 @@
+name: Test
+
+on: [push]
+
+jobs:
+  pytest:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Cache datasets
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/datasets
+        key: ${{ runner.os }}-datasets-${{ hashFiles("tests/.download_datasets.py") }}
+
+    - name: Download datasetes
+      run: |
+        python ./tests/.download_datasets.py
+        
+    - name: pytest
+      run: |
+        pytest ./tests/

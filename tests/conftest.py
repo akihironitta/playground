@@ -2,5 +2,6 @@ import pytest
 
 
 @pytest.fixture(scope="session")
-def datadir():
-    return "datasets"
+def datadir(tmpdir_factory):
+    fn = tmpdir_factory.mktemp("datasets")
+    return fn

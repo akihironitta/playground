@@ -4,12 +4,10 @@ on: [push]
 
 jobs:
   pytest:
-
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
-
+    timeout-minutes: 3
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -36,11 +34,11 @@ jobs:
         pwd
         python ./tests/.download_datasets.py
 
-    - name: pytest
-      run: |
-        pytest ./tests/
-
     - name: print to stdout, stderr
       run: |
         echo "output to stdout"
         echo "output to stderr" >&2
+
+    - name: pytest
+      run: |
+        pytest ./tests/

@@ -36,3 +36,8 @@ jobs:
     - name: pytest
       run: |
         pytest ./tests/
+        
+    - name: print to stdout, stderr
+      run: |
+        echo "output to stdout"
+        echo "output to stderr" >&2

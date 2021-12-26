@@ -1,6 +1,6 @@
 name: Check Code Format
 
-on: [push]
+on: []  # FIXME before merge
 
 jobs:
   build:

@@ -1,0 +1,21 @@
+name: Check Code Format
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Sleep 1000000
+      timeout-minutes: 1
+      run: |
+        sleep 1000000
+
+    - name: Foo
+      run: |
+        echo foo

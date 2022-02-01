@@ -1,0 +1,7 @@
+name: Check Code Format
+
+on: [push]
+
+jobs:
+  lint:
+    uses: akihironitta/actions/.github/workflows/lint.yml@master

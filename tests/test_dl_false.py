@@ -1,13 +1,5 @@
-from warnings import warn
-
-import torch
-from torchvision.datasets import MNIST
+from src import print_os
 
 
-def test_dl_false(datadir, tmpdir):
-    warn(f"datadir='{datadir}' tmpdir='{tmpdir}'")
-    dataset = MNIST(datadir, download=False)
-
-def test_dl_false2(datadir, tmpdir):
-    warn(f"datadir='{datadir}' tmpdir='{tmpdir}'")
-    dataset = MNIST(datadir, download=False)
+def test_print_os(datadir, tmpdir):
+    assert isinstance(print_os(), str)

@@ -30,6 +30,6 @@ jobs:
         echo "output to stderr" >&2
 
     - name: pytest
-      if: matrix.python_version == "3.9"
+      if: matrix.python_version == '3.9'
       run: |
         pytest ./tests/

@@ -7,15 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        python_version: ["3.8", "3.9"]
     timeout-minutes: 3
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Set up Python 3.9
+    - name: Set up Python
       uses: actions/setup-python@v1
       with:
-        python-version: 3.9
+        python-version: ${{ matrix.python_version }}
 
     - name: Install dependencies
       run: |
@@ -28,5 +30,6 @@ jobs:
         echo "output to stderr" >&2
 
     - name: pytest
+      if: matrix.python_version == "3.9"
       run: |
         pytest ./tests/

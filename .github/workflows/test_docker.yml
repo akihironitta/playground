@@ -1,0 +1,30 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docker-io:
+    runs-on: ubuntu-latest
+    container:
+      image: akihironitta/playground:boring
+    steps:
+      - name: Test something
+        run: |
+          echo 'Hello world'
+          pip list
+
+  ghcr-io:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/akihironitta/playground:boring
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+    steps:
+      - name: Test something
+        run: |
+          echo 'Hello world'
+          pip list

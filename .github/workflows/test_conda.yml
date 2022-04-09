@@ -9,7 +9,6 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.9"]
-    timeout-minutes: 3
     steps:
     - name: Checkout
       uses: actions/checkout@v3

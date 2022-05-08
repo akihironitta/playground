@@ -1,0 +1,74 @@
+name: Caching
+description: some more complex caching - pip & conda & hf
+
+inputs:
+  os:
+    description: operating system
+    required: true
+  python-version:
+    description: Python version
+    required: true
+  requires:
+    description: define oldest or latest
+    required: false
+    default: ""
+  offset:
+    description: some extra hash for pip cache
+    required: false
+    default: ""
+
+defaults:
+  run:
+    shell: bash
+
+runs:
+  using: "composite"
+  steps:
+
+  - name: Install assitant.py's deps
+    run: pip install fire requests
+
+  - name: Pin dependencies at minimal versions
+    if: inputs.requires == 'oldest'
+    run: python .github/assistant.py set-oldest-versions
+
+  - name: Set TIME_PERIOD for cache reset interval
+    run: python -c "import time; days = time.time() / 60 / 60 / 24; print(f'TIME_PERIOD={int(days / 7)}')" >> $GITHUB_ENV
+    if: inputs.requires == 'latest'
+
+  # Note: This uses an internal pip API and may not always work
+  # https://github.com/actions/cache/blob/master/examples.md#multiple-oss-in-a-workflow
+  - name: Determine caches
+    env:
+      PWD: $(pwd)
+    run: |
+      python -c "from pip._internal.locations import USER_CACHE_DIR; print('PIP_CACHE_DIR=' + USER_CACHE_DIR)" >> $GITHUB_ENV
+      python -c "import os ; print('TRANSFORMERS_CACHE=' + os.path.join('$PWD', 'ci-cache_huggingface'))" >> $GITHUB_ENV
+
+  - name: Cache pip
+    uses: actions/cache@v3
+    with:
+      path: $PIP_CACHE_DIR
+      key: ${{ inputs.os }}-py${{ inputs.python-version }}-pip-td${TIME_PERIOD}-${{ inputs.offset }}-${{ hashFiles('requirements.txt') }}
+      restore-keys: ${{ inputs.os }}-py${{ inputs.python-version }}-pip-td${TIME_PERIOD}-${{ inputs.offset }}-
+
+  - name: Cache conda
+    uses: actions/cache@v3
+    if: inputs.os == 'Linux'
+    with:
+      path: ~/conda_pkgs_dir
+      key: py${{ inputs.python-version }}-conda-td${TIME_PERIOD}-${{ inputs.offset }}
+      restore-keys: py${{ inputs.python-version }}-conda-td${TIME_PERIOD}-${{ inputs.offset }}
+
+  # https://huggingface.co/docs/transformers/installation#cache-setup
+  - name: Cache Hugging Face Transformers
+    uses: actions/cache@v3
+    with:
+      path: $TRANSFORMERS_CACHE
+      key: ${{ inputs.os }}-cache-transformers
+
+  - name: Post Cache Hugging Face Transformers
+    run: |
+      mkdir -p $TRANSFORMERS_CACHE
+      ls -l .
+      ls -l $TRANSFORMERS_CACHE

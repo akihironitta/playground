@@ -1,4 +1,5 @@
 name: Caching
+
 description: some more complex caching - pip & conda & hf
 
 inputs:
@@ -22,8 +23,15 @@ defaults:
     shell: bash
 
 runs:
-  using: "composite"
+  using: composite
   steps:
+  - name: Print inputs
+    run:
+      echo ${{ inputs.os }}
+      echo ${{ inputs.python-version }}
+      echo ${{ inputs.requires }}
+      echo ${{ inputs.offset }}
+      echo $PWD $(pwd)
 
   - name: Install assitant.py's deps
     run: pip install fire requests

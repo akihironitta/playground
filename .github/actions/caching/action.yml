@@ -23,7 +23,7 @@ runs:
   steps:
   - name: Print inputs
     shell: bash
-    run:
+    run: |
       echo ${{ inputs.os }}
       echo ${{ inputs.python-version }}
       echo ${{ inputs.requires }}

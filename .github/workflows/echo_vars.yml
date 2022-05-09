@@ -1,0 +1,28 @@
+name: Echo variables
+
+on: [push]
+
+
+
+jobs:
+  echo:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # https://docs.github.com/en/actions/learn-github-actions/contexts#runner-context
+    - name: runner context
+      shell: bash
+      run: |
+        echo runner.name: ${{ runner.name }}
+        echo runner.os: ${{ runner.os }}
+        echo runner.arch: ${{ runner.arch }}
+        echo runner.temp: ${{ runner.temp }}
+        echo runner.tool_cache: ${{ runner.tool_cache }}
+

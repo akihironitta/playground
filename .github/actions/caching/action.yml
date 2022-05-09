@@ -18,14 +18,11 @@ inputs:
     required: false
     default: ""
 
-defaults:
-  run:
-    shell: bash
-
 runs:
   using: composite
   steps:
   - name: Print inputs
+    shell: bash
     run:
       echo ${{ inputs.os }}
       echo ${{ inputs.python-version }}
@@ -34,19 +31,23 @@ runs:
       echo $PWD $(pwd)
 
   - name: Install assitant.py's deps
+    shell: bash
     run: pip install fire requests
 
   - name: Pin dependencies at minimal versions
     if: inputs.requires == 'oldest'
+    shell: bash
     run: python .github/assistant.py set-oldest-versions
 
   - name: Set TIME_PERIOD for cache reset interval
+    shell: bash
     run: python -c "import time; days = time.time() / 60 / 60 / 24; print(f'TIME_PERIOD={int(days / 7)}')" >> $GITHUB_ENV
     if: inputs.requires == 'latest'
 
   # Note: This uses an internal pip API and may not always work
   # https://github.com/actions/cache/blob/master/examples.md#multiple-oss-in-a-workflow
   - name: Determine caches
+    shell: bash
     env:
       PWD: $(pwd)
     run: |
@@ -76,6 +77,7 @@ runs:
       key: ${{ inputs.os }}-cache-transformers
 
   - name: Post Cache Hugging Face Transformers
+    shell: bash
     run: |
       mkdir -p $TRANSFORMERS_CACHE
       ls -l .

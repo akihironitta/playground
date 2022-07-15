@@ -1,0 +1,31 @@
+name: Complex caching
+description: some more complex caching - pip & conda
+
+inputs:
+  os:
+    description: operating system
+    required: true
+  python-version:
+    description: Python version
+    required: true
+  requires:
+    description: define oldest, latest, or an empty string
+    required: false
+    default: ""
+  offset:
+    description: some extra hash for pip cache
+    required: false
+    default: ""
+  interval:
+    description: cache hash reset interval in days
+    required: false
+    default: "7"
+
+runs:
+  using: "composite"
+  steps:
+
+  - name: echo os
+    run: |
+      echo ${{ runner.os }}
+    shell: bash

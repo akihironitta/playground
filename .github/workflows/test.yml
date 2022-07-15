@@ -38,3 +38,6 @@ jobs:
       if: matrix.python_version == '3.9'
       run: |
         python -m pytest tests
+
+    - name: Use cache.yml
+      uses: ./.github/actions/cache

@@ -37,7 +37,7 @@ jobs:
         retention-days: 1
 
   report-results:
-    runs-on: ubutnu-latest
+    runs-on: ubuntu-latest
     needs: run-tests
     steps:
     - name: Download artifacts

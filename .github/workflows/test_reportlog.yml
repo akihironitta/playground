@@ -55,4 +55,5 @@ jobs:
       working-directory: pytest_logs
       run: |
         # TODO: Simplify commands
-        jq 'select(."$report_type" == "TestReport") | select(.outcome == "skipped") | [.nodeid, .outcome] | join(" ")' *.json | sort | uniq -c | sort -r  
+        jq 'select(."$report_type" == "TestReport") | select(.outcome == "skipped") | [.nodeid, .outcome] | join(" ")' *.json | sort | uniq -c | sort -r | sed 's/^[ ]*//' | grep ^$(ls pytest_logs | wc -l | sed "s/^[ ]*//")
+        

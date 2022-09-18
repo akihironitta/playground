@@ -44,7 +44,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: pytest-log-artifact
-        path: .
+        path: pytest_logs
 
     - name: Check files
       run: |

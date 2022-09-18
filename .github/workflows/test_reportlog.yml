@@ -27,7 +27,7 @@ jobs:
     - name: Run tests
       run: |
         mkdir pytest_logs
-        python -m pytest -v tests --report-log=pytest_logs/log-${{ matrix.python-version }}.json
+        python -m pytest -vv tests --report-log=pytest_logs/log-${{ matrix.python-version }}.json
         
     - name: Upload artifacts
       uses: actions/upload-artifact@v3

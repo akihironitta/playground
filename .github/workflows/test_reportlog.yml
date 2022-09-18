@@ -49,3 +49,4 @@ jobs:
       run: |
         ls -al
         ls -al pytest_logs/
+        ls -al pytest_logs/pytest_logs

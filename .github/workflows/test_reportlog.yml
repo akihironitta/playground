@@ -54,4 +54,4 @@ jobs:
     - name: Show tests that are skipped by all configurations
       working-directory: pytest_logs
       run: |
-         jq 'select(."$report_type" == "TestReport") | select(.outcome == "skipped") | [.nodeid, .outcome] | join(" ")' *.json | sort | uniq
+         jq 'select(."$report_type" == "TestReport") | select(.outcome == "skipped") | [.nodeid, .outcome] | join(" ")' *.json | sort | uniq -u

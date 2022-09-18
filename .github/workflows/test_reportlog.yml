@@ -32,7 +32,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: pytest_logs
+        name: pytest-log-artifact
         path: pytest_logs/log-${{ matrix.python-version }}.json
         retention-days: 1
 
@@ -43,10 +43,10 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v3
       with:
-        path: pytest_logs
-        
+        name: pytest-log-artifact
+        path: .
+
     - name: Check files
       run: |
         ls -al
         ls -al pytest_logs/
-        ls -al pytest_logs/pytest_logs

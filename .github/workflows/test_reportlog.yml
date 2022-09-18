@@ -51,9 +51,14 @@ jobs:
         ls -al
         ls -al pytest_logs/
 
+    - name: Show tests that are skipped by any configurations
+      working-directory: pytest_logs
+      run: |
+        # TODO: Simplify commands
+        jq 'select(."$report_type" == "TestReport") | select(.outcome == "skipped") | [.nodeid, .outcome] | join(" ")' *.json | sort | uniq -c | sort -r | sed 's/^[ ]*//'
+
     - name: Show tests that are skipped by all configurations
       working-directory: pytest_logs
       run: |
         # TODO: Simplify commands
         jq 'select(."$report_type" == "TestReport") | select(.outcome == "skipped") | [.nodeid, .outcome] | join(" ")' *.json | sort | uniq -c | sort -r | sed 's/^[ ]*//' | grep ^$(ls *.json | wc -l | sed "s/^[ ]*//")
-        
